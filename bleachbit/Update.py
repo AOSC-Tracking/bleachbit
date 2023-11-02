@@ -157,7 +157,6 @@ def get_ip_for_url(url):
     if len(url_split) < 3:
         return '(bad URL)'
     hostname = url.split('/')[2]
-    import socket
     try:
         ip_address = socket.gethostbyname(hostname)
     except socket.gaierror:
@@ -165,13 +164,73 @@ def get_ip_for_url(url):
     return ip_address
 
 
+def debug_check_no_verify(url):
+    logger.info('debug_check_no_verify() started')
+    import ssl
+    import urllib.request
+    ctx = ssl.create_default_context()
+    ctx.check_hostname = False
+    ctx.verify_mode = ssl.CERT_NONE
+    logger.info('calling urlopen() without SSL verification')
+    try:
+        with urllib.request.urlopen(url, context=ctx) as handle:
+            logger.info('calling handle.read()')
+            doc = handle.read()
+            logger.info('read document of size %s: %s', len(doc), doc)
+    except (socket.gaierror, Exception) as e:
+        logger.error(e)
+
+
+def debug_check_requests(url):
+    logger.info('debug_check_requests() started')
+    import requests
+    resp = requests.get(url, stream=True)
+    ip_addr = '(unknown)'
+    if hasattr(resp.raw._connection.sock,'socket'):
+        logger.info('sock.socket.getpeername()')
+        ip_addr = resp.raw._connection.sock.socket.getpeername()
+    if hasattr(resp.raw._connection.sock,'getpeername'):
+        logger.info('sock.getpeername()')
+        ip_addr = resp.raw._connection.sock.getpeername()
+    logger.info('requests IP address: %s', ip_addr)
+    logger.info('requests status code: %s', resp.status_code)
+    logger.info('requests text length (%s): %s', len(resp.text), resp.text)
+
+def debug_check_ipv4(url):
+    logger.info('debug_check_ipv4() started')
+    import requests.packages.urllib3.util.connection as urllib3_cn
+    save_allowed = urllib3_cn.allowed_gai_family
+    if save_allowed == socket.AF_INET:
+        logger.info('ipv4: already set to AF_INET')
+        return
+    def allowed_fam():
+        return socket.AF_INET
+    urllib3_cn.allowed_gai_family = allowed_fam
+    debug_check_requests(url)
+    logger.info('ipv4: restoring allowed_gai_family')
+    urllib3_cn.allowed_gai_family = save_allowed
+
+
 def check_updates(check_beta, check_winapp2, append_text, cb_success):
     """Check for updates via the Internet"""
+    logger.info('check_updates(%s, %s, ...)', check_beta, check_winapp2)
     opener = build_opener()
     socket.setdefaulttimeout(bleachbit.socket_timeout)
     opener.addheaders = [('User-Agent', user_agent())]
     import encodings.idna  # https://github.com/bleachbit/bleachbit/issues/760
     url = bleachbit.update_check_url
+    try:
+        debug_check_no_verify(url)
+    except Exception as e:
+        logger.exception(e)
+    try:
+        debug_check_requests(url)
+    except Exception as e:
+        logger.exception(e)
+    try:
+        debug_check_ipv4(url)
+    except Exception as e:
+        logger.exception(e)
     if 'windowsapp' in sys.executable.lower():
         url += '?windowsapp=1'
     try:
