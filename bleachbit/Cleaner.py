@@ -275,12 +275,6 @@ class System(Cleaner):
             self.add_option('desktop_entry', _('Broken desktop files'), _(
                 'Delete broken application menu entries and file associations'))
             self.add_option('cache', _('Cache'), _('Delete the cache'))
-            # TRANSLATORS: Localizations are files supporting specific
-            # languages, so applications appear in Spanish, etc.
-            self.add_option('localizations', _('Localizations'), _(
-                'Delete files for unwanted languages'))
-            self.set_warning(
-                'localizations', _("Configure this option in the preferences."))
             # TRANSLATORS: 'Rotated logs' refers to old system log files.
             # Linux systems often have a scheduled job to rotate the logs
             # which means compress all except the newest log and then delete
@@ -387,14 +381,6 @@ class System(Cleaner):
                     # pylint: disable=possibly-used-before-assignment
                     if filename.endswith('.desktop') and Unix.is_broken_xdg_desktop(filename):
                         yield Command.Delete(filename)
-
-        # unwanted locales
-        if 'posix' == os.name and 'localizations' == option_id:
-            for path in Unix.locales.localization_paths(locales_to_keep=options.get_languages()):
-                if os.path.isdir(path):
-                    for f in FileUtilities.children_in_directory(path, True):
-                        yield Command.Delete(f)
-                yield Command.Delete(path)
 
         # Windows logs
         if 'nt' == os.name and 'logs' == option_id:
