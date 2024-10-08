@@ -113,8 +113,6 @@ class PreferencesDialog:
             # TRANSLATORS: Sidebar label for the software updates page of the preferences dialog.
             (self.__updates_page, 'updates', _("Updates"),
              online_update_notification_enabled),
-            # TRANSLATORS: Sidebar label for the "Languages" page in the Preferences dialog.
-            (self.__languages_page, 'languages', _("Languages"), True),
             # TRANSLATORS: Sidebar label for the page managing browser cookies in
             # the Preferences dialog.
             (self.__cookies_page, 'cookies', _("Cookies"), True),
@@ -672,76 +670,6 @@ class PreferencesDialog:
         button_box.pack_start(button_remove, True, True, 0)
         vbox.pack_start(button_box, False, True, 0)
 
-        return vbox
-
-    def __languages_page(self):
-        """Return widget containing the languages page"""
-
-        def keep_lang_toggled_cb(cell, path, liststore):
-            """Callback for toggling the 'keep' column"""
-            __iter = liststore.get_iter_from_string(path)
-            value = not liststore.get_value(__iter, 0)
-            liststore.set(__iter, 0, value)
-            langid = liststore[path][1]
-            options.set_language(langid, value)
-
-        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
-        vbox.set_border_width(12)
-
-        ui_language_box = self.__create_section(
-            vbox,
-            # TRANSLATORS: Section title on the preferences languages page.
-            _("BleachBit interface language"))
-
-        self.__create_language_widgets(ui_language_box)
-
-        # Windows does not have locale cleaner.
-        if 'posix' != os.name:
-            return vbox
-
-        cleanup_box = self.__create_section(
-            vbox,
-            # TRANSLATORS: Section title on the preferences languages page.
-            _("Language files to keep when cleaning applications"))
-
-        # populate data
-        liststore = Gtk.ListStore('gboolean', str, str)
-        for lang, native in get_supported_language_code_name_dict().items():
-            liststore.append([(options.get_language(lang)), lang, native])
-
-        # create treeview
-        treeview = Gtk.TreeView.new_with_model(liststore)
-
-        # create column views
-        self.renderer0 = Gtk.CellRendererToggle()
-        self.renderer0.set_property('activatable', True)
-        self.renderer0.connect('toggled', keep_lang_toggled_cb, liststore)
-        # TRANSLATORS: Column header in the languages treeview.
-        # This column controls whether to keep the language.
-        self.column0 = Gtk.TreeViewColumn(_("Keep"),
-                                          self.renderer0, active=0)
-        treeview.append_column(self.column0)
-
-        self.renderer1 = Gtk.CellRendererText()
-        # TRANSLATORS: Column header in the languages treeview showing the
-        # language code (e.g., 'en_US').
-        self.column1 = Gtk.TreeViewColumn(_("Code"), self.renderer1, text=1)
-        treeview.append_column(self.column1)
-
-        self.renderer2 = Gtk.CellRendererText()
-        # TRANSLATORS: Column header in the languages treeview showing the
-        # native name of the language.
-        self.column2 = Gtk.TreeViewColumn(_("Name"), self.renderer2, text=2)
-        treeview.append_column(self.column2)
-        treeview.set_search_column(2)
-
-        # finish
-        swindow = Gtk.ScrolledWindow()
-        swindow.set_overlay_scrolling(False)
-        swindow.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
-        swindow.set_size_request(300, 200)
-        swindow.add(treeview)
-        cleanup_box.pack_start(swindow, True, True, 0)
         return vbox
 
     def _check_path_exists(self, pathname):
