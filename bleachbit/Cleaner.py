@@ -236,18 +236,6 @@ class System(Cleaner):
                 # TRANSLATORS: Name of a cleaning option. Cache is a noun.
                 _('Cache'),
                 DELETE_CACHE_DESCRIPTION)
-            if not IS_MAC:
-                self.add_option(
-                    'localizations',
-                    # TRANSLATORS: Localizations are files supporting specific
-                    # languages, so applications appear in Spanish, etc.
-                    _('Localizations'),
-                    # TRANSLATORS: Description of the Localizations cleaning option.
-                    _('Delete files for unwanted languages'))
-                self.set_warning(
-                    'localizations',
-                    # TRANSLATORS: Warning for the Localizations cleaning option.
-                    _("Configure this option in the preferences."))
             self.add_option(
                 'rotated_logs',
                 # TRANSLATORS: 'Rotated logs' refers to old system log files.
@@ -402,16 +390,6 @@ class System(Cleaner):
                     # pylint: disable-next=possibly-used-before-assignment
                     if filename.endswith('.desktop') and Unix.is_broken_xdg_desktop(filename):
                         yield Command.Delete(filename)
-
-        # unwanted locales
-        if IS_POSIX and not IS_MAC and 'localizations' == option_id:
-            for path in Unix.locales.localization_paths(locales_to_keep=options.get_languages()):
-                # A symlinked locale directory points at a locale that may be
-                # on the keep list, so delete the link without its contents.
-                if FileUtilities.is_normal_directory(path):
-                    for f in FileUtilities.children_in_directory(path, True):
-                        yield Command.Delete(f)
-                yield Command.Delete(path)
 
         # Windows logs
         if IS_WINDOWS and 'logs' == option_id:
