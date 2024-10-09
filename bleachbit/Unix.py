@@ -645,6 +645,18 @@ def apt_clean():
     return old_size - new_size
 
 
+def oma_clean():
+    """Run 'oma clean' and return the size in bytes of freed space"""
+    old_size = get_apt_size()
+    try:
+        run_cleaner_cmd('pkexec', ['oma', 'clean'], '^unused regex$', ['ERROR '])
+    except subprocess.CalledProcessError as e:
+        raise RuntimeError("Error calling '%s':\n%s" %
+                           (' '.join(e.cmd), e.output))
+    new_size = get_apt_size()
+    return old_size - new_size
+
+
 def get_apt_size():
     """Return the size of the apt cache (in bytes)"""
     (_rc, stdout, _stderr) = General.run_external(['apt-get', '-s', 'clean'])
