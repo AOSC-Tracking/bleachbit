@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cleaner id="oma" os="linux">
+  <label>oma</label>
+  <description>Package manager</description>
+  <running type="exe">oma</running>
+  <option id="clean">
+    <label>Package cache</label>
+    <description>Delete system package cache</description>
+    <action command="oma.clean"/>
+  </option>
+</cleaner>

@@ -375,6 +375,21 @@ class AptClean(ActionProvider):
                                    'apt-get clean')
 
 
+class OmaClean(ActionProvider):
+
+    """Action to run 'oma clean'"""
+    action_key = 'oma.clean'
+
+    def __init__(self, action_element, path_vars=None):
+        ActionProvider.__init__(self, action_element, path_vars)
+
+    def get_commands(self):
+        if FileUtilities.exe_exists('oma'):
+            yield Command.Function(None,
+                                   Unix.oma_clean,
+                                   'oma clean')
+
+
 class ChromeAutofill(FileActionProvider):
 
     """Action to clean 'autofill' table in Google Chrome/Chromium"""
