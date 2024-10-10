@@ -48,7 +48,7 @@ def log_startup_time(name):
 
 # Setting below value to false disables update notification (useful
 # for packages in repositories).
-online_update_notification_enabled = True
+online_update_notification_enabled = False
 
 #
 # Platform
