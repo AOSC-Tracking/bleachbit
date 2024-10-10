@@ -270,7 +270,7 @@ class Options:
         # set defaults
         self.__set_default("auto_hide", True)
         self.__set_default("check_beta", False)
-        self.__set_default("check_online_updates", True)
+        self.__set_default("check_online_updates", False)
         self.__set_default("dark_mode", True)
         self.__set_default("debug", False)
         self.__set_default("delete_confirmation", True)
