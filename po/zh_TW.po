@@ -153,9 +153,17 @@ msgid "Delete the most recently used list"
 msgstr "刪除最近使用檔案清單"
 
 #: ../cleaners/dnf.xml ../cleaners/yum.xml ../cleaners/pacman.xml
-#: ../cleaners/apt.xml ../cleaners/snap.xml
+#: ../cleaners/apt.xml ../cleaners/snap.xml ../cleaners/oma.xml
 msgid "Package manager"
 msgstr "軟體包管理員"
+
+#: ../cleaners/oma.xml
+msgid "Package cache"
+msgstr "軟體包快取"
+
+#: ../cleaners/oma.xml
+msgid "Delete system package cache"
+msgstr "刪除系統軟體包快取"
 
 #: ../cleaners/dnf.xml
 msgid "Remove packages that were formerly dependencies"
