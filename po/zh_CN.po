@@ -178,7 +178,7 @@ msgid "Delete the backup files"
 msgstr "删除备份文件"
 
 #: ../cleaners/apt.xml ../cleaners/dnf.xml ../cleaners/pacman.xml
-#: ../cleaners/snap.xml ../cleaners/yum.xml
+#: ../cleaners/snap.xml ../cleaners/yum.xml ../cleaner/oma.yml
 msgid "Package manager"
 msgstr "包管理器"
 
@@ -685,6 +685,14 @@ msgstr "清空“最近使用”列表"
 #: ../cleaners/nautilus.xml
 msgid "Custom folders will be reset."
 msgstr "将重置自定义文件夹。"
+
+#: ../cleaners/oma.xml
+msgid "Package cache"
+msgstr "软件包缓存"
+
+#: ../cleaners/oma.xml
+msgid "Delete system package cache"
+msgstr "删除系统软件包缓存"
 
 #: ../cleaners/profanity.xml
 msgid "Downloaded files"
