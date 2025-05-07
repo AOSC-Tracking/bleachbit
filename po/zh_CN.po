@@ -155,6 +155,7 @@ msgstr "缓存"
 #: ../cleaners/claude.xml ../cleaners/zoom.xml ../cleaners/evolution.xml
 #: ../cleaners/flash.xml ../cleaners/internet_explorer.xml ../cleaners/gftp.xml
 #: ../cleaners/kde.xml ../cleaners/vuze.xml ../bleachbit/Cleaner.py
+#: ../cleaners/oma.xml
 msgid "Delete the cache"
 msgstr "删除缓存文件"
 
@@ -176,7 +177,7 @@ msgid "Delete the most recently used list"
 msgstr "清空“最近使用”列表"
 
 #: ../cleaners/dnf.xml ../cleaners/yum.xml ../cleaners/pacman.xml
-#: ../cleaners/apt.xml ../cleaners/snap.xml
+#: ../cleaners/apt.xml ../cleaners/snap.xml ../cleaners/oma.xml
 msgid "Package manager"
 msgstr "包管理器"
 

@@ -154,6 +154,7 @@ msgstr "快取"
 #: ../cleaners/claude.xml ../cleaners/zoom.xml ../cleaners/evolution.xml
 #: ../cleaners/flash.xml ../cleaners/internet_explorer.xml ../cleaners/gftp.xml
 #: ../cleaners/kde.xml ../cleaners/vuze.xml ../bleachbit/Cleaner.py
+#: ../cleaners/oma.xml
 msgid "Delete the cache"
 msgstr "刪除快取"
 
@@ -175,7 +176,7 @@ msgid "Delete the most recently used list"
 msgstr "刪除最近使用檔案清單"
 
 #: ../cleaners/dnf.xml ../cleaners/yum.xml ../cleaners/pacman.xml
-#: ../cleaners/apt.xml ../cleaners/snap.xml
+#: ../cleaners/apt.xml ../cleaners/snap.xml ../cleaners/oma.xml
 msgid "Package manager"
 msgstr "軟體包管理員"
 
