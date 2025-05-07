@@ -152,9 +152,17 @@ msgstr "最近使用"
 msgid "Delete the most recently used list"
 msgstr "清空“最近使用”列表"
 
-#: ../cleaners/dnf.xml ../cleaners/yum.xml ../cleaners/apt.xml
+#: ../cleaners/dnf.xml ../cleaners/yum.xml ../cleaners/oma.xml
 msgid "Package manager"
 msgstr "包管理器"
+
+#: ../cleaners/oma.xml
+msgid "Package cache"
+msgstr "软件包缓存"
+
+#: ../cleaners/oma.xml
+msgid "Delete system package cache"
+msgstr "删除系统软件包缓存"
 
 #: ../cleaners/dnf.xml
 msgid "Remove packages that were formerly dependencies"
